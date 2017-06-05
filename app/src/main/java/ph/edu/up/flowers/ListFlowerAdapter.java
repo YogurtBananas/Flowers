@@ -33,7 +33,7 @@ public class ListFlowerAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return position;
+        return flowerList.get(position).getId();
     }
 
     @Override

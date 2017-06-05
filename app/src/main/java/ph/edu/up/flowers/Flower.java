@@ -13,8 +13,7 @@ public class Flower {
     public Flower () {}
 
 
-    public Flower(int id, String name, String ease, String instructions) {
-        this.id = id;
+    public Flower(String name, String ease, String instructions) {
         this.name = name;
         this.ease = ease;
         this.instructions = instructions;
@@ -39,11 +38,6 @@ public class Flower {
         return instructions;
     }
 
-    public void setId(int id) {
-
-        this.id = id;
-
-    }
 
     public void setName(String name) {
 

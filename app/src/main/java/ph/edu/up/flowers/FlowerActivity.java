@@ -48,52 +48,66 @@ public class FlowerActivity extends AppCompatActivity  {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
 
         sqLiteHelper = new SQLiteHelper(this);
         setContentView(R.layout.activity_flower);
         listView =(ListView) findViewById(R.id.layout_main);
+        /*Flower flower = new Flower();
+        flower.setName("Vanilla");
+        flower.setEase("Hard");
+        flower.setInstructions("Regulate temp and humidity regularly.");
+        sqLiteHelper.updateRecords(flower);*/
+        List<Flower> flowerList = sqLiteHelper.getAllRecords();
+        Log.i("SENDER", String.valueOf(flowerList.get(0).getId()));
+        Log.i("SENDER", String.valueOf(flowerList.get(0).getName()));
+        Log.i("SENDER", String.valueOf(flowerList.get(0).getEase()));
+        Log.i("SENDER", String.valueOf(flowerList.get(0).getInstructions()));
+        /*Log.i("SENDER", String.valueOf(flowerList.get(1).getId()));
+        Log.i("SENDER", String.valueOf(flowerList.get(1).getName()));
+        Log.i("SENDER", String.valueOf(flowerList.get(1).getEase()));
+        Log.i("SENDER", String.valueOf(flowerList.get(1).getInstructions()));*/
 
-        File database = getApplicationContext().getDatabasePath(sqLiteHelper.DATABASE_NAME);
-        if(false == database.exists()) {
-            sqLiteHelper.getReadableDatabase();
-            if (copyDB(this)) {
-                Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show();
-                return;
-            }
-        }
+//        File database = getApplicationContext().getDatabasePath(sqLiteHelper.DATABASE_NAME);
+//        if(false == database.exists()) {
+//            sqLiteHelper.getReadableDatabase();
+//            if (copyDB(this)) {
+//                Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
+//            } else {
+//                Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show();
+//                return;
+//            }
+//        }
 
-        flowerArrayList = sqLiteHelper.getAllRecords();
-        flowerAdapter = new ListFlowerAdapter(this, flowerArrayList);
-        listView.setAdapter(flowerAdapter);
+//        flowerArrayList = sqLiteHelper.getAllRecords();
+//        flowerAdapter = new ListFlowerAdapter(this, flowerArrayList);
+//        listView.setAdapter(flowerAdapter);
     }
 
-    private boolean copyDB(Context context) {
-        try {
-            InputStream inputStream = context.getAssets().open(sqLiteHelper.DATABASE_NAME);
-            String outFileName = SQLiteHelper.DB_LOCATION + SQLiteHelper.DATABASE_NAME;
-            OutputStream outputStream = new FileOutputStream(outFileName);
-            byte[]buff = new byte[1024];
-            int length = 0;
-            while ((length = inputStream.read(buff)) > 0) {
-                outputStream.write(buff, 0, length);
-            }
-            outputStream.flush();
-            outputStream.close();
-            return true;
-        } catch (Exception ex) {
-            return false;
-        }
-    }
+//    private boolean copyDB(Context context) {
+//        try {
+//            InputStream inputStream = context.getAssets().open(sqLiteHelper.DATABASE_NAME);
+//            String outFileName = SQLiteHelper.DB_LOCATION + SQLiteHelper.DATABASE_NAME;
+//            OutputStream outputStream = new FileOutputStream(outFileName);
+//            byte[]buff = new byte[1024];
+//            int length = 0;
+//            while ((length = inputStream.read(buff)) > 0) {
+//                outputStream.write(buff, 0, length);
+//            }
+//            outputStream.flush();
+//            outputStream.close();
+//            return true;
+//        } catch (Exception ex) {
+//            return false;
+//        }
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--ScrollView-->
-<LinearLayout
+<!--<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/list_package"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="4dp"
-    >
+    android:paddingTop="4dp" >-->
     <!--
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -621,12 +620,12 @@
 
     </LinearLayout>-->
     <LinearLayout
-        android:id="@+id/list_item_1"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:paddingLeft="16dp"
-        android:onClick="viewPhotos">
+        >
 
         <ImageView
             android:layout_width="48dp"
@@ -665,5 +664,6 @@
         </LinearLayout>
 
     </LinearLayout>
-</LinearLayout>
-<!--</ScrollView>-->
+
+<!--</LinearLayout>
+</ScrollView>-->
