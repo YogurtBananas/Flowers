@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -32,12 +33,18 @@ public class ListFlowerAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        Flower flower = flowerList.get(position);
-        return flower.getName();
+        return position;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        return null;
+        View view = View.inflate(context, R.layout.content_flower, null);
+        TextView textName = (TextView) view.findViewById(R.id.item_name);
+        TextView textEase = (TextView) view.findViewById(R.id.item_ease);
+        /*TextView textInst = (TextView) view.findViewById(R.id.item_instructions);*/
+        textName.setText(flowerList.get(position).getName());
+        textEase.setText(flowerList.get(position).getEase());
+        /*textInst.setText(flowerList.get(position).getInstructions());*/
+        return view;
     }
 }

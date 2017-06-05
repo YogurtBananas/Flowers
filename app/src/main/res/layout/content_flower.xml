@@ -2,15 +2,18 @@
 <!--ScrollView-->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/list_package"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="4dp"
+    >
+    <!--
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context="ph.edu.up.flowers.FlowerActivity"
-    tools:showIn="@layout/activity_flower">
+    tools:showIn="@layout/activity_flower"-->
 
    <!-- <LinearLayout
         android:id="@+id/outer"
@@ -617,28 +620,50 @@
         </LinearLayout>
 
     </LinearLayout>-->
+    <LinearLayout
+        android:id="@+id/list_item_1"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:paddingLeft="16dp"
+        android:onClick="viewPhotos">
 
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@mipmap/laugh"
+            android:layout_marginRight="8dp"
+            android:layout_gravity="center_vertical"/>
 
-        <TextView
-            android:id="@+id/item_name"
-            android:Text="Name"
-            android:textSize="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:paddingTop="10dp"
+            android:orientation="vertical"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
 
-        <TextView
-            android:id="@+id/item_ease"
-            android:Text="Ease of planting"
-            android:textSize="18dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/item_name"
+                android:text="Name"
+                android:textSize="18dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/item_instructions"
-            android:Text="How to plant"
-            android:textSize="16dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/item_ease"
+                android:text="Ease of planting"
+                android:textSize="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
+            <!--<TextView
+                android:id="@+id/item_instructions"
+                android:text="How to plant"
+                android:textSize="14dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />-->
+
+        </LinearLayout>
+
+    </LinearLayout>
 </LinearLayout>
 <!--</ScrollView>-->

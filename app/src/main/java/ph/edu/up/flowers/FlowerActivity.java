@@ -1,5 +1,6 @@
 package ph.edu.up.flowers;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -10,16 +11,35 @@ import android.provider.SyncStateContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ButtonBarLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.provider.SyncStateContract.Constants;
+import android.widget.Toast;
+
+import org.w3c.dom.Text;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FilterOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FlowerActivity extends AppCompatActivity  {
+    private ListView listView;
+    private ListFlowerAdapter flowerAdapter;
+    private List<Flower> flowerArrayList;
+    private SQLiteHelper sqLiteHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +52,47 @@ public class FlowerActivity extends AppCompatActivity  {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
 
-        SQLiteHelper sqLiteHelper = new SQLiteHelper(FlowerActivity.this);
+        sqLiteHelper = new SQLiteHelper(this);
+        setContentView(R.layout.activity_flower);
+        listView =(ListView) findViewById(R.id.layout_main);
+
+        File database = getApplicationContext().getDatabasePath(sqLiteHelper.DATABASE_NAME);
+        if(false == database.exists()) {
+            sqLiteHelper.getReadableDatabase();
+            if (copyDB(this)) {
+                Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+
+        flowerArrayList = sqLiteHelper.getAllRecords();
+        flowerAdapter = new ListFlowerAdapter(this, flowerArrayList);
+        listView.setAdapter(flowerAdapter);
+    }
+
+    private boolean copyDB(Context context) {
+        try {
+            InputStream inputStream = context.getAssets().open(sqLiteHelper.DATABASE_NAME);
+            String outFileName = SQLiteHelper.DB_LOCATION + SQLiteHelper.DATABASE_NAME;
+            OutputStream outputStream = new FileOutputStream(outFileName);
+            byte[]buff = new byte[1024];
+            int length = 0;
+            while ((length = inputStream.read(buff)) > 0) {
+                outputStream.write(buff, 0, length);
+            }
+            outputStream.flush();
+            outputStream.close();
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
     }
 
     @Override
@@ -66,7 +121,6 @@ public class FlowerActivity extends AppCompatActivity  {
 
     public final static String USERNAME = "ph.edu.up.floweractivity.USERNAME";
     public final static String TEXT= "ph.edu.up.floweractivity.TEXT";
-    public final static String IMAGE= "ph.edu.up.floweractivity.IMAGE";
 
     public void viewPhotos(View view) {
 
@@ -95,9 +149,23 @@ public class FlowerActivity extends AppCompatActivity  {
         startActivity(intent);
     }
 
-    /*public void onAddRecord() {
-        Intent intent = new Intent(FlowerActivity.this, TableManipulationActivity.class);
-        intent.putExtra(Constants.DML_TYPE, Constants.INSERT);
-        startActivityForResult(intent, Constants.ADD_RECORD);
-    }*/
+    public void saveChanges(View view) {
+        Flower flower = new Flower();
+        LinearLayout parent_layout = (LinearLayout) findViewById(R.id.layoutAddUpdate);
+
+        TextView textName = (TextView) parent_layout.getChildAt(0);
+        String flowerName = textName.getText().toString();
+
+        TextView textEase = (TextView) parent_layout.getChildAt(1);
+        String flowerEase = textEase.getText().toString();
+
+        TextView textInst = (TextView) parent_layout.getChildAt(2);
+        String flowerInst = textInst.getText().toString();
+
+        flower.setName(flowerName);
+        flower.setEase(flowerEase);
+        flower.setInstructions(flowerInst);
+
+        sqLiteHelper.insertRecords(flower);
+    }
 }
