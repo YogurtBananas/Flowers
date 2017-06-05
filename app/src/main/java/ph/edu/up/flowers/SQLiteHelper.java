@@ -29,7 +29,7 @@ public class SQLiteHelper extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
-        db.execSQL("create table " + TABLE_NAME + " ( " + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_NAME + " VARCHAR, " + COLUMN_EASE + " VARCHAR, " + COLUMN_INSTRUCTIONS + " VARCHAR);");
+        db.execSQL("CREATE TABLE " + TABLE_NAME + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_NAME + " VARCHAR NOT NULL, " + COLUMN_EASE + " VARCHAR NOT NULL, " + COLUMN_INSTRUCTIONS + " VARCHAR NOT NULL);");
     }
 
     @Override
@@ -50,20 +50,20 @@ public class SQLiteHelper extends SQLiteOpenHelper{
 
     public void insertItems() {
         database = this.getReadableDatabase();
-        database.execSQL("INSERT INTO " + TABLE_NAME + " (" + COLUMN_NAME + ", " + COLUMN_EASE + ", " + COLUMN_INSTRUCTIONS + ") VALUES('Vanilla', 'Hard', 'Temp and humidity needs ot be regulated constantly.')");
+        database.execSQL("INSERT INTO " + TABLE_NAME + " (" + COLUMN_NAME + ", " + COLUMN_EASE + ", " + COLUMN_INSTRUCTIONS + ") VALUES('Vanilla', 'Hard', 'Temp and humidity needs ot be regulated constantly.');");
         database.close();
     }
 
     public void updateRecords(Flower flower) {
         database = this.getReadableDatabase();
         database.execSQL("UPDATE " + TABLE_NAME + " SET " + COLUMN_NAME + " = '" + flower.getName() + "', " + COLUMN_EASE + " = '" + flower.getEase() + "', "
-                + COLUMN_INSTRUCTIONS + " = '" + flower.getInstructions() + "' WHERE " + COLUMN_ID + " = 0");
+                + COLUMN_INSTRUCTIONS + " = '" + flower.getInstructions() + "' WHERE " + COLUMN_ID + " = " + flower.getId() + ";");
         database.close();
     }
 
     public void deleteRecords(Flower flower) {
         database = this.getReadableDatabase();
-        database.execSQL("DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME + " = '" + flower.getName() + "'");
+        database.execSQL("DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_ID + " = " + flower.getId() + ";");
         database.close();
     }
 

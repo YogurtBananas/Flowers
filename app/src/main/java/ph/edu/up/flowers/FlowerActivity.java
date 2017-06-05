@@ -48,14 +48,14 @@ public class FlowerActivity extends AppCompatActivity  {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
 
         sqLiteHelper = new SQLiteHelper(this);
         setContentView(R.layout.activity_flower);
@@ -75,39 +75,10 @@ public class FlowerActivity extends AppCompatActivity  {
         Log.i("SENDER", String.valueOf(flowerList.get(1).getEase()));
         Log.i("SENDER", String.valueOf(flowerList.get(1).getInstructions()));*/
 
-//        File database = getApplicationContext().getDatabasePath(sqLiteHelper.DATABASE_NAME);
-//        if(false == database.exists()) {
-//            sqLiteHelper.getReadableDatabase();
-//            if (copyDB(this)) {
-//                Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
-//            } else {
-//                Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show();
-//                return;
-//            }
-//        }
-
 //        flowerArrayList = sqLiteHelper.getAllRecords();
 //        flowerAdapter = new ListFlowerAdapter(this, flowerArrayList);
 //        listView.setAdapter(flowerAdapter);
     }
-
-//    private boolean copyDB(Context context) {
-//        try {
-//            InputStream inputStream = context.getAssets().open(sqLiteHelper.DATABASE_NAME);
-//            String outFileName = SQLiteHelper.DB_LOCATION + SQLiteHelper.DATABASE_NAME;
-//            OutputStream outputStream = new FileOutputStream(outFileName);
-//            byte[]buff = new byte[1024];
-//            int length = 0;
-//            while ((length = inputStream.read(buff)) > 0) {
-//                outputStream.write(buff, 0, length);
-//            }
-//            outputStream.flush();
-//            outputStream.close();
-//            return true;
-//        } catch (Exception ex) {
-//            return false;
-//        }
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
